@@ -15,12 +15,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RoomModule {
 
-    private const val QUOTE_DATABASE_NAME = "marvel_database"
+    private const val POST_DATABASE_NAME = "post_database"
 
     @Singleton
     @Provides
     fun provideRoom(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, PostDatabase::class.java, QUOTE_DATABASE_NAME).build()
+        Room.databaseBuilder(context, PostDatabase::class.java, POST_DATABASE_NAME).build()
 
     @Singleton
     @Provides

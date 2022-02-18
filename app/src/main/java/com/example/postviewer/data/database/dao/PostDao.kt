@@ -5,25 +5,33 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.postviewer.data.model.Comment
 import com.example.postviewer.data.model.Post
 
 @Dao
 interface PostDao {
 
     @Query("SELECT * FROM post")
-    suspend fun getAllPosts():List<Post>
+    suspend fun getPosts():List<Post>
 
-/*
-    @Query("SELECT * FROM character LIMIT :limit OFFSET :offset")
-    suspend fun getAllCharacters(limit:Int,offset:Int):List<Character>
+    @Query("SELECT * FROM post WHERE id = :id")
+    suspend fun getPosts(id:Int):List<Post>
 
-    @Query("SELECT * FROM character WHERE id = :movieId")
-    suspend fun getCharacter(movieId:Int):Character
+    @Query("SELECT * FROM comment")
+    suspend fun getComments():List<Comment>
+
+    @Query("SELECT * FROM comment WHERE id = :postId")
+    suspend fun getComments(postId:Int):List<Comment>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(movies:List<Character>)
+    suspend fun insertAll(post:List<Post>)
 
-    @Query("DELETE FROM character")
-    suspend fun deleteAllCharacters()
-     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPost(post:Post)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertComment(comment:Comment)
+
+    @Query("DELETE FROM post")
+    suspend fun deleteAllPosts()
 }

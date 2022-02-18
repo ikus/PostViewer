@@ -17,6 +17,13 @@ class PostService @Inject constructor(private val api:PostApiClient) {
         }
     }
 
+    suspend fun getPosts(id:Int): List<Post>{
+        return withContext(Dispatchers.IO) {
+            val response = api.getPosts(id)
+            response
+        }
+    }
+
     suspend fun getComments(): List<Comment>{
         return withContext(Dispatchers.IO) {
             val response = api.getComments()
@@ -24,5 +31,11 @@ class PostService @Inject constructor(private val api:PostApiClient) {
         }
     }
 
+    suspend fun getComments(postId:Int): List<Comment>{
+        return withContext(Dispatchers.IO) {
+            val response = api.getComments(postId)
+            response
+        }
+    }
 }
 
