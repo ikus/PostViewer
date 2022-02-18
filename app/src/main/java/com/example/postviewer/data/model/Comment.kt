@@ -1,10 +1,15 @@
 package com.example.postviewer.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "comment")
+@Entity(tableName = "comment",
+    foreignKeys = arrayOf(ForeignKey(entity = Post::class,
+                                    parentColumns = arrayOf("id"),
+                                    childColumns = arrayOf("postId"),
+                                    onDelete = ForeignKey.CASCADE)))
 data class Comment(
 
     @PrimaryKey
@@ -13,6 +18,7 @@ data class Comment(
 
     @ColumnInfo(name = "postId")
     @SerializedName("postId")
+    //@ForeignKey(entity = Post::class, parentColumns = arrayOf("id"), childColumns = arrayOf("postID"), onDelete = ForeignKey.CASCADE)
     var postId: Int? = null,
 
     @ColumnInfo(name = "name")
