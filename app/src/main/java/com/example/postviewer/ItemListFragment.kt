@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.postviewer.PostViewerApp.Companion.prefs
 import com.example.postviewer.data.PostRepository
 import com.example.postviewer.data.model.Post
-import com.example.postviewer.data.network.PostApiClient
-import com.example.postviewer.placeholder.PlaceholderContent;
 import com.example.postviewer.databinding.FragmentItemListBinding
 import com.example.postviewer.databinding.ItemListContentBinding
 import com.example.postviewer.ui.adapter.PostAdapter

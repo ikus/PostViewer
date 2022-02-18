@@ -11,16 +11,12 @@ import com.example.postviewer.databinding.ItemListContentBinding
 
 class PostViewHolder(view: View): RecyclerView.ViewHolder(view) {
     val binding = ItemListContentBinding.bind(view)
-
-    //val idView: TextView = binding.idText
+    val bodyView: TextView = binding.body
     val contentView: TextView = binding.content
 
-
     fun render(post: Post, onClickListener: (Post) -> Unit){
-        //idView.text = post.id.toString()
         contentView.text = post.title
+        bodyView.text = post.body
         itemView.setOnClickListener{ onClickListener(post) }
     }
-
-
 }

@@ -5,16 +5,13 @@
     android:id="@+id/item_list_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/container_horizontal_margin"
-    android:layout_marginEnd="@dimen/container_horizontal_margin">
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list"
         android:name="com.example.postviewer.ItemListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.example.postviewer.ItemDetailHostActivity"
         tools:listitem="@layout/item_list_content" />

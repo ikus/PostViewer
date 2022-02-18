@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.postviewer.data.PostRepository
 import com.example.postviewer.data.model.Comment
 import com.example.postviewer.data.model.Post
-import com.example.postviewer.placeholder.PlaceholderContent
 import com.example.postviewer.databinding.FragmentItemDetailBinding
 import com.example.postviewer.ui.adapter.CommentAdapter
 import com.example.postviewer.ui.adapter.PostAdapter
@@ -31,9 +30,7 @@ class ItemDetailFragment : Fragment() {
     internal lateinit var repository: PostRepository
 
     private lateinit var recyclerView: RecyclerView
-
     private var itemId:Int? = null
-    private var item: PlaceholderContent.PlaceholderItem? = null
     private var toolbarLayout: CollapsingToolbarLayout? = null
 
     private var _binding: FragmentItemDetailBinding? = null
@@ -41,7 +38,6 @@ class ItemDetailFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
