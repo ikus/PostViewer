@@ -30,7 +30,7 @@ interface PostDao {
     suspend fun insertPost(post:Post)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertComment(comment:Comment)
+    suspend fun insertComments(comment:List<Comment>)
 
     @Query("DELETE FROM post")
     suspend fun deleteAllPosts()

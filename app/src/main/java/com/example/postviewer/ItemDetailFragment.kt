@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.postviewer.data.PostRepository
 import com.example.postviewer.data.model.Comment
 import com.example.postviewer.data.model.Post
 import com.example.postviewer.placeholder.PlaceholderContent
 import com.example.postviewer.databinding.FragmentItemDetailBinding
+import com.example.postviewer.ui.adapter.CommentAdapter
 import com.example.postviewer.ui.adapter.PostAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -28,11 +30,10 @@ class ItemDetailFragment : Fragment() {
     @Inject
     internal lateinit var repository: PostRepository
 
+    private lateinit var recyclerView: RecyclerView
 
     private var itemId:Int? = null
     private var item: PlaceholderContent.PlaceholderItem? = null
-
-    lateinit var itemDetailTextView: TextView
     private var toolbarLayout: CollapsingToolbarLayout? = null
 
     private var _binding: FragmentItemDetailBinding? = null
@@ -41,15 +42,6 @@ class ItemDetailFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val dragListener = View.OnDragListener { v, event ->
-        if (event.action == DragEvent.ACTION_DROP) {
-            val clipDataItem: ClipData.Item = event.clipData.getItemAt(0)
-            val dragData = clipDataItem.text
-            item = PlaceholderContent.ITEM_MAP[dragData]
-            updateContent()
-        }
-        true
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,9 +59,8 @@ class ItemDetailFragment : Fragment() {
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         val rootView = binding.root
         toolbarLayout = binding.toolbarLayout
-        itemDetailTextView = binding.itemDetail
+        recyclerView = binding.commentList!!
         updateContent()
-        rootView.setOnDragListener(dragListener)
         return rootView
     }
 
@@ -81,14 +72,15 @@ class ItemDetailFragment : Fragment() {
             if(post==null)
                 post = itemId?.let { repository.getPostsFromApi(it).get(0) }
             var comments: List<Comment>? = post?.id?.let { repository.getCommentsFromDb(it) }
-            if(comments==null){
-                    comments = post?.id?.let { repository.getCommentsFromApi(it) }
+            if(comments?.size==0){
+                comments = post?.id?.let { repository.getCommentsFromApi(it) }
+                comments?.let { repository.insertComments(it) }
             }
             activity?.runOnUiThread{
                 toolbarLayout?.title = post?.title
-                itemDetailTextView.text = post?.body
+                //itemDetailTextView.text = post?.body
+                recyclerView?.adapter = CommentAdapter(comments)
             }
-            //TODO: Mostrar comentarios
         }
     }
 

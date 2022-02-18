@@ -52,12 +52,12 @@ class PostRepository @Inject constructor(
         return response
     }
 
-    suspend fun insertPosts(characters:List<Post>){
-        postDao.insertAll(characters)
+    suspend fun insertPosts(posts:List<Post>){
+        postDao.insertAll(posts)
     }
 
-    suspend fun insertDetails(character:Character){
-        //movieDao.insertAll(character)
+    suspend fun insertComments(comments:List<Comment>){
+        postDao.insertComments(comments)
     }
 
 }
