@@ -18,7 +18,6 @@ data class Comment(
 
     @ColumnInfo(name = "postId")
     @SerializedName("postId")
-    //@ForeignKey(entity = Post::class, parentColumns = arrayOf("id"), childColumns = arrayOf("postID"), onDelete = ForeignKey.CASCADE)
     var postId: Int? = null,
 
     @ColumnInfo(name = "name")

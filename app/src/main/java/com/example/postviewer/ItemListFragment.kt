@@ -32,8 +32,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemListFragment : Fragment() {
-    @Inject
-    internal lateinit var api: PostApiClient
+
     @Inject
     internal lateinit var repository: PostRepository
 

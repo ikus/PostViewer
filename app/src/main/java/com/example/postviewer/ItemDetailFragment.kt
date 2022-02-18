@@ -9,14 +9,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.postviewer.data.PostRepository
+import com.example.postviewer.data.model.Comment
+import com.example.postviewer.data.model.Post
 import com.example.postviewer.placeholder.PlaceholderContent
 import com.example.postviewer.databinding.FragmentItemDetailBinding
+import com.example.postviewer.ui.adapter.PostAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
 
+    @Inject
+    internal lateinit var repository: PostRepository
+
+
+    private var itemId:Int? = null
     private var item: PlaceholderContent.PlaceholderItem? = null
 
     lateinit var itemDetailTextView: TextView
@@ -40,13 +53,9 @@ class ItemDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
-                // Load the placeholder content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
-                item = PlaceholderContent.ITEM_MAP[it.getInt(ARG_ITEM_ID).toString()]
+                itemId= it.getInt(ARG_ITEM_ID)
             }
         }
     }
@@ -55,34 +64,36 @@ class ItemDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         val rootView = binding.root
-
         toolbarLayout = binding.toolbarLayout
         itemDetailTextView = binding.itemDetail
-
         updateContent()
         rootView.setOnDragListener(dragListener)
-
         return rootView
     }
 
     private fun updateContent() {
-        toolbarLayout?.title = item?.content
-
-        // Show the placeholder content as text in a TextView.
-        item?.let {
-            itemDetailTextView.text = it.details
+        var resultPost:List<Post>
+        var resultComment:List<Comment>
+        CoroutineScope(Dispatchers.IO).launch {
+            var post: Post? = itemId?.let { repository.getPostsFromDb(it).get(0) }
+            if(post==null)
+                post = itemId?.let { repository.getPostsFromApi(it).get(0) }
+            var comments: List<Comment>? = post?.id?.let { repository.getCommentsFromDb(it) }
+            if(comments==null){
+                    comments = post?.id?.let { repository.getCommentsFromApi(it) }
+            }
+            activity?.runOnUiThread{
+                toolbarLayout?.title = post?.title
+                itemDetailTextView.text = post?.body
+            }
+            //TODO: Mostrar comentarios
         }
     }
 
     companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
+                const val ARG_ITEM_ID = "item_id"
     }
 
     override fun onDestroyView() {
