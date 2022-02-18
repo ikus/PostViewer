@@ -3,8 +3,6 @@ package com.example.postviewer.ui.adapter
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.postviewer.data.model.Post
 import com.example.postviewer.databinding.ItemListContentBinding
 

@@ -1,25 +1,19 @@
-package com.example.postviewer
+package com.example.postviewer.ui
 
-import android.content.ClipData
-import android.content.ClipDescription
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.postviewer.PostViewerApp.Companion.prefs
+import com.example.postviewer.R
 import com.example.postviewer.data.PostRepository
 import com.example.postviewer.data.model.Post
 import com.example.postviewer.databinding.FragmentItemListBinding
-import com.example.postviewer.databinding.ItemListContentBinding
 import com.example.postviewer.ui.adapter.PostAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope

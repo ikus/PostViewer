@@ -1,21 +1,17 @@
-package com.example.postviewer
+package com.example.postviewer.ui
 
-import android.content.ClipData
 import android.os.Bundle
-import android.view.DragEvent
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.postviewer.data.PostRepository
 import com.example.postviewer.data.model.Comment
 import com.example.postviewer.data.model.Post
 import com.example.postviewer.databinding.FragmentItemDetailBinding
 import com.example.postviewer.ui.adapter.CommentAdapter
-import com.example.postviewer.ui.adapter.PostAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

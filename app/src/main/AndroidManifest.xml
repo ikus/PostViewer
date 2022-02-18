@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PostViewer">
         <activity
-            android:name=".ItemDetailHostActivity"
+            android:name=".ui.ItemDetailHostActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:resizeableActivity="true"
