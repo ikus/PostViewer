@@ -14,27 +14,24 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.postviewer.data.network.PostApiClient
 import com.example.postviewer.placeholder.PlaceholderContent;
 import com.example.postviewer.databinding.FragmentItemListBinding
 import com.example.postviewer.databinding.ItemListContentBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-/**
- * A Fragment representing a list of Pings. This fragment
- * has different presentations for handset and larger screen devices. On
- * handsets, the fragment presents a list of items, which when touched,
- * lead to a {@link ItemDetailFragment} representing
- * item details. On larger screens, the Navigation controller presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 
+@AndroidEntryPoint
 class ItemListFragment : Fragment() {
 
-    /**
-     * Method to intercept global key events in the
-     * item list fragment to trigger keyboard shortcuts
-     * Currently provides a toast when Ctrl + Z and Ctrl + F
-     * are triggered
-     */
+    @Inject
+    internal lateinit var api: PostApiClient
+
+
     private val unhandledKeyEventListenerCompat =
         ViewCompat.OnUnhandledKeyEventListenerCompat { v, event ->
             if (event.keyCode == KeyEvent.KEYCODE_Z && event.isCtrlPressed) {
@@ -83,6 +80,11 @@ class ItemListFragment : Fragment() {
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
         setupRecyclerView(recyclerView, itemDetailFragmentContainer)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            println(api?.getPosts(1)?.toString())
+            println(api?.getComments(1)?.toString())
+        }
     }
 
     private fun setupRecyclerView(

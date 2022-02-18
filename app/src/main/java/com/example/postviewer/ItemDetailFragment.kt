@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.postviewer.placeholder.PlaceholderContent
 import com.example.postviewer.databinding.FragmentItemDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A fragment representing a single Item detail screen.
@@ -18,6 +19,7 @@ import com.example.postviewer.databinding.FragmentItemDetailBinding
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
+@AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
 
     /**
